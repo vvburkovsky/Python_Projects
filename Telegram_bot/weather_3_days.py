@@ -14,9 +14,10 @@ exclude = 'minutely,hourly,alerts'
 error = 'Ошибка получения данных :-('
 
 def weather_3_days ():
+    weather_url = requests.get ('http://api.openweathermap.org/data/2.5/onecall?' , params = {'lat' : lat, 'lon' : lon, 'exclude' : exclude, 'units' : units, 'appid' : api_key, 'lang' : lang})
+    json_item = json.loads(weather_url.text)
+    
     def weather_today ():
-        weather_url = requests.get ('http://api.openweathermap.org/data/2.5/onecall?' , params = {'lat' : lat, 'lon' : lon, 'exclude' : exclude, 'units' : units, 'appid' : api_key, 'lang' : lang})
-        json_item = json.loads(weather_url.text)
         try:
             today = json_item["daily"][0]
             today_date = datetime.fromtimestamp(today["dt"]).strftime('%d-%m-%Y')
@@ -31,8 +32,6 @@ def weather_3_days ():
             return weather_today
 
     def weather_tomorrow ():
-        weather_url = requests.get ('http://api.openweathermap.org/data/2.5/onecall?' , params = {'lat' : lat, 'lon' : lon, 'exclude' : exclude, 'units' : units, 'appid' : api_key, 'lang' : lang})
-        json_item = json.loads(weather_url.text)
         try:
             tomorrow = json_item["daily"][1]
             tomorrow_date = datetime.fromtimestamp(tomorrow["dt"]).strftime('%d-%m-%Y')
@@ -47,8 +46,6 @@ def weather_3_days ():
             return weather_tomorrow
 
     def weather_day_after_tomorrow ():
-        weather_url = requests.get ('http://api.openweathermap.org/data/2.5/onecall?' , params = {'lat' : lat, 'lon' : lon, 'exclude' : exclude, 'units' : units, 'appid' : api_key, 'lang' : lang})
-        json_item = json.loads(weather_url.text)
         try:
             day_after_tomorrow =  json_item["daily"][2]
             day_after_tomorrow_date = datetime.fromtimestamp(day_after_tomorrow["dt"]).strftime('%d-%m-%Y')
