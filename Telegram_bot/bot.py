@@ -5,19 +5,18 @@ from subprocess import call
 
 API_TOKEN = '123456789'
 bot = telebot.TeleBot(API_TOKEN)
-admin_user_id = 123 or 456
+admin_user_id = [123, 456]
 
 @bot.message_handler(commands=['start'])
 def start(message):
   check_id = message.from_user.id
-  if check_id == admin_user_id:
+  if check_id in admin_user_id:
     keyboard = telebot.types.ReplyKeyboardMarkup()
     keyboard.row ('Погода')
     keyboard.row ('Роутер')
     bot.send_message(message.chat.id, text = 'Что надо:', reply_markup = keyboard)
-  if check_id != admin_user_id:
+  if check_id not in admin_user_id:
     bot.send_message(message.chat.id, text = 'Уходи')
-
 
 #Получить USER ID 
 @bot.message_handler(commands=['id'])
