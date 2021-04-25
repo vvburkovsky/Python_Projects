@@ -1,6 +1,7 @@
 import telebot
 import weather_current as wc
 import weather_3_days as wc3
+import status as st
 from subprocess import call
 
 API_TOKEN = '123456789'
@@ -42,7 +43,7 @@ def main (message):
     menu2 = telebot.types.ReplyKeyboardMarkup()
     menu2.row ('вкл WIFI', 'выкл WIFI')
     menu2.row ('WIFI Power')
-    #menu2.row ('статус WIFI')
+    menu2.row ('Статус WIFI')
     menu2.row ('Главное меню')
 
 #Подменю WIFI Power
@@ -91,7 +92,8 @@ def main (message):
       call(["/bin/sh /usr/bin/Telegram_bot/wifi_1.sh"], shell=True)
       bot.send_message(message.chat.id, text ='Мощность 1 %')
 
-#    if message.text == 'статус WIFI': #не работает
-#      bot.send_message(message.chat.id, '\n'.join(wc.current))
+    if message.text == 'Статус WIFI':
+      call(["/bin/sh /usr/bin/Telegram_bot/status_wifi.sh"], shell=True)
+      bot.send_message(message.chat.id, st.state())
 
 bot.polling()
